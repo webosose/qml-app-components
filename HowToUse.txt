@@ -1,0 +1,12 @@
+Requirements
+------------------------------------------------------------------------------
+
+Qt 5 is needed as well as the LS2 library and includes.
+Compiling
+-------------------------------------------------------------------------------
+
+To apply this module in qmlproject,
+1. build
+2. go qmlproject build/settings tab
+3. set env, QML2_IMPORT_PATH as built lib/qmldir
+4. enjoy component ran

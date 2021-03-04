@@ -1,0 +1,28 @@
+module QmlAppComponents
+
+AppMain                 0.1 App/AppMain.qml
+
+FontStyle               0.1 AppStyle/FontStyle.qml
+ColorThemeStyle         0.1 AppStyle/ColorThemeStyle.qml
+AppStyle                0.1 AppStyle/AppStyle.qml
+
+Log                     0.1 Developer/Log.qml
+DebugBackground         0.1 Developer/DebugBackground.qml
+DebugRect               0.1 Developer/DebugRect
+
+Spacer                  0.1 Layout/Spacer.qml
+
+AppStringSheet          0.1 Localization/AppStringSheet.qml
+
+Background              0.1 Others/Background.qml
+
+LocaleServiceWrapper    0.1 LSService/LocaleServiceWrapper.qml
+LunaService             0.1 LSService/LunaService.qml
+ServiceStateNotifier    0.1 LSService/ServiceStateNotifier.qml
+BasicLunaService        0.1 LSService/BasicLunaService.qml
+SettingsServiceWrapper  0.1 LSService/SettingsServiceWrapper.qml
+DefaultSettingsValue    0.1 LSService/DefaultSettingsValue.qml
+
+IconButton              0.1 EosWrapper/IconButton.qml
+IconButtonStyle         0.1 EosWrapper/IconButtonStyle.qml
+
