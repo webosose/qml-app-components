@@ -1,6 +1,6 @@
 # @@@LICENSE
 #
-#      Copyright (c) 2020 LG Electronics, Inc.
+#      Copyright (c) 2020-2021 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ QT += qml quick
 TARGET = qmlappcomponentsplugin
 #TARGET = $$qtLibraryTarget($$TARGET)
 
+include($$PWD/shader.pri)
+
 uri = com.webos.qmlappcomponents
 
 MOC_DIR = .moc
@@ -41,6 +43,7 @@ OTHER_FILES += qmldir \
 other_files.files = qmldir \
                     qmlappcomponentsplugindescription.json
 qml_files.files = QmlAppComponents/*
+shader.files = $$SHADER_FILES
 
 CONFIG += link_pkgconfig
 PKGCONFIG = glib-2.0 #luna-service2
@@ -52,6 +55,7 @@ defined(WEBOS_INSTALL_QML, var) {
     target.path = $$WEBOS_INSTALL_QML/QmlAppComponents
     other_files.path = $$WEBOS_INSTALL_QML/QmlAppComponents
     qml_files.path = $$WEBOS_INSTALL_QML/QmlAppComponents
+    shader.path = $$WEBOS_INSTALL_QML/QmlAppComponents/Shader
 } else {
     # For desktop dev environment
     message("qml-app-components : Desktop Build")
@@ -61,6 +65,7 @@ defined(WEBOS_INSTALL_QML, var) {
     other_files.path = $$OUT_PWD/QmlAppComponents/
     qml_files.path = $$OUT_PWD/QmlAppComponents/
     message($$other_files.path)
+    shader.path = $$OUT_PWD/QmlAppComponents/Shader
 
     !equals(_PRO_FILE_PWD_, $$OUT_PWD) {
         copy_qmldir.target = $$OUT_PWD/qmldir
@@ -73,7 +78,7 @@ defined(WEBOS_INSTALL_QML, var) {
 
 
 
-INSTALLS += target other_files qml_files
+INSTALLS += target other_files qml_files shader
 
 #defined(WEBOS_INSTALL_WEBOS_APPLICATIONSDIR, var) {
 #    INSTALL_APPDIR = $$WEBOS_INSTALL_WEBOS_APPLICATIONSDIR/com.webos.app.fridge.clova
