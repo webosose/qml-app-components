@@ -57,10 +57,9 @@ Item {
                         try {
                             var result = JSON.parse(xhr.responseText);
                             jsonObject = result;
-                            root.status = eLoaded
                             jsonObjectReceived(result);
                             console.info("[QMLAppComponent:JsonLoader] Json read successful");
-
+                            root.status = eLoaded
                         } catch(e) {
                             console.warn("[QMLAppComponent:JsonLoader] Error parsing JSON in path");
                             error("Error parsing JSON in path");

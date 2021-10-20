@@ -111,7 +111,7 @@ Item {
         defaultStyleId = styleId;
     }
 
-    function color(_key, _styleId, _objectName) { getColor(_key, _styleId, _objectName); }
+    function color(_key, _styleId, _objectName) { return getColor(_key, _styleId, _objectName); }
     function getColor(_key, _styleId, _objectName) {
         var styleId = _styleId;
         var defaultValue = _defaultColor;
@@ -126,7 +126,7 @@ Item {
             return result;
     }
 
-    function number(_key, _styleId, _objectName) { getNumber(_key, _styleId, _objectName); }
+    function number(_key, _styleId, _objectName) { return getNumber(_key, _styleId, _objectName); }
     function getNumber(_key, _styleId, _objectName) {
         var styleId = _styleId;
         var defaultValue = _defaultNumber;
@@ -141,7 +141,7 @@ Item {
             return result;
     }
 
-    function string(_key, _styleId, _objectName) { getString(_key, _styleId, _objectName); }
+    function string(_key, _styleId, _objectName) { return getString(_key, _styleId, _objectName); }
     function getString(_key, _styleId, _objectName) {
         var styleId = _styleId;
         var defaultValue = _defaultString;
