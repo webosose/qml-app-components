@@ -27,7 +27,7 @@ Item {
     readonly property string eError : "Error"
 
     function isLoaded() {
-        return status === eLoaded;
+        return status === eLoaded || status === eError;
     }
 
     signal jsonObjectReceived(var result);
