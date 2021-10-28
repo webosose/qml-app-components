@@ -5,6 +5,7 @@ AppMain                 0.1 App/AppMain.qml
 FontStyle               0.1 AppStyle/FontStyle.qml
 ColorThemeStyle         0.1 AppStyle/ColorThemeStyle.qml
 AppStyle                0.1 AppStyle/AppStyle.qml
+singleton StyleLoader   0.1 AppStyle/StyleLoader.qml
 
 Log                     0.1 Developer/Log.qml
 DebugBackground         0.1 Developer/DebugBackground.qml
@@ -15,6 +16,7 @@ Spacer                  0.1 Layout/Spacer.qml
 AppStringSheet          0.1 Localization/AppStringSheet.qml
 
 Background              0.1 Others/Background.qml
+JsonLoader              0.1 Others/JsonLoader.qml
 
 LocaleServiceWrapper    0.1 LSService/LocaleServiceWrapper.qml
 LunaService             0.1 LSService/LunaService.qml
@@ -25,4 +27,3 @@ DefaultSettingsValue    0.1 LSService/DefaultSettingsValue.qml
 
 IconButton              0.1 EosWrapper/IconButton.qml
 IconButtonStyle         0.1 EosWrapper/IconButtonStyle.qml
-
