@@ -53,6 +53,7 @@ Item {
     property int _defaultNumber: 0
     property string _defaultString: ""
     property string defaultStyleId: baseStyleId // styleId that if user does not requested specific styleId
+    property string _defaultImage: "./noimage.png"
 
     // Note : Tricky way to find application path
     // Note : This will not works to LSM loaded apps like quicksettings.
@@ -206,6 +207,27 @@ Item {
             return defaultValue;
         else
             return result;
+    }
+
+    /*
+      image / getImage function
+      default return : noimage.png in component location.
+      */
+    function image(_key, _styleId, _objectName) { return getImage(_key, _styleId, _objectName); }
+    function getImage(_key, _styleId, _objectName) {
+        var styleId = _styleId;
+        // Note : Be careful when use Qt.resolvedUrl or 'url' type,
+        // because it points the location that this file is in.
+        var defaultValue = Qt.resolvedUrl(_defaultImage);
+        if (!loaded)
+            return defaultValue;
+        if (defaultStyleId !== "" && styleId === undefined)
+            styleId = defaultStyleId;
+        var result = _getValue(_key, styleId, _objectName)
+        if (result === undefined)
+            return defaultValue;
+        else
+            return _appPath + result;
     }
 
     function setAppPath(url) {
