@@ -1,0 +1,9 @@
+{
+    "keyColor1": "blue",
+    "keyColor2": "#A06060",
+    "keyImage1": "default.png",
+    "commonOnlyValue": 10,
+    "buttonPressColor": "#303030",
+    "buttonReleaseColor": "#404040",
+    "keyModule1": "CustomizedCommonModule.qml"
+}
