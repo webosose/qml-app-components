@@ -1,0 +1,23 @@
+Step 1
+Copy main.qml to target machine home dir and run it.
+ex) scp ./main.qml root@IPADDR:~/
+ex) eos-benchmark-launcher ~/main.qml
+Expected result: gray bg screen with beanbird image that located in center. It can be closed soon. (Not important)
+Note : Testing default fallback when no style exists.
+
+Step 2.
+Copy style.qml and one png image to target machine home dir and run it.
+ex) scp ./style.qml root@IPADDR:~/
+ex) scp ./default.png root@IPADDR:~/
+ex) eos-benchmark-launcher ~/main.qml
+Expected result: blue bg screen with "B" large text image. It can be closed soon. (Not important)
+Note : Testing common fallback when only system common style exists.
+
+Step 3.
+Make customization dir in target home dir, and copy some file to it, and run it.
+ex) (IN TARGET MACHINE) ~# mkdir customization
+ex) scp ./customization/style.json root@IPADDR:~/customization/
+ex) scp ./test.png root@IPADDR:~/
+ex) eos-benchmark-launcher ~/main.qml
+Expedted result: red bg screen with beanbird image WITH green dummy text. It can be closed soon.
+Note : Testing local style file override

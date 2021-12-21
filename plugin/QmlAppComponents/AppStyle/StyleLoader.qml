@@ -53,10 +53,15 @@ Item {
     property int _defaultNumber: 0
     property string _defaultString: ""
     property string defaultStyleId: baseStyleId // styleId that if user does not requested specific styleId
+    property string _defaultImage: "./noimage.png"
+    property string _defaultQmlComponent: "./NoComponent.qml"
 
     // Note : Tricky way to find application path
     // Note : This will not works to LSM loaded apps like quicksettings.
     property url _appPath: getQmlRunnerDependentAppPath()
+
+    // ResourcePath : path for image, qmlComponent.
+    property url _resourcePath: _appPath
 
     readonly property url appCustomizationPath: _appPath + "customization/"
     onAppCustomizationPathChanged: console.log("[QmlAppComponents][StyleLoader] App customization path changed into", appCustomizationPath);
@@ -208,14 +213,119 @@ Item {
             return result;
     }
 
+    /*
+      image / getImage function
+      default return : noimage.png in component location.
+      */
+    function image(_key, _styleId, _objectName) { return getImage(_key, _styleId, _objectName); }
+    function getImage(_key, _styleId, _objectName) {
+        var styleId = _styleId;
+        // Note : Be careful when use Qt.resolvedUrl or 'url' type,
+        // because it points the location that this file is in.
+        var defaultValue = Qt.resolvedUrl(_defaultImage);
+        if (!loaded)
+            return defaultValue;
+        if (defaultStyleId !== "" && styleId === undefined)
+            styleId = defaultStyleId;
+        var result = _getValue(_key, styleId, _objectName)
+        if (result === undefined)
+            return defaultValue;
+        else
+            return _resourcePath + result;
+    }
+
+    function qmlFile(_key, _styleId, _objectName) { return getQmlFile(_key, _styleId, _objectName); }
+    function getQmlFile(_key, _styleId, _objectName) {
+        var styleId = _styleId;
+        // Note : Be careful when use Qt.resolvedUrl or 'url' type,
+        // because it points the location that this file is in.
+        var defaultValue = Qt.resolvedUrl(_defaultQmlComponent);
+
+        if (!loaded)
+            return defaultValue;
+        if (defaultStyleId !== "" && styleId === undefined)
+            styleId = defaultStyleId;
+        var result = _getValue(_key, styleId, _objectName)
+        if (result === undefined)
+            return defaultValue;
+        else
+            return _resourcePath + result;
+    }
+
+    // Note : for future 1. - return delegate (component)
+    // Note : for future 2. - return object itself. param - container (for anchors.fill)
+    property var qmlObjectList: []
+
+    // Just return component, and let user to use it.
+    function qmlComponent(_key, _styleId, _objectName) {
+        var qmlFileUrl = getQmlFile(_key, _styleId, _objectName);
+        var component = Qt.createComponent(qmlFileUrl);
+
+        return component;
+    }
+
+    // Return completed qml object.
+    function qmlObject(_key, _parent, _styleId, _objectName) {
+        var qmlFileUrl = getQmlFile(_key, _styleId, _objectName);
+        var component = Qt.createComponent(qmlFileUrl);
+        var childObjet = null
+
+        var obj = {"id":qmlObjectList.length + 1, "component":component, "parent":_parent, "obj": childObjet, "purpose": "object"};
+        qmlObjectList.push(obj);
+
+        if (component.status === Component.Ready)
+            finalizeQmlCreation(component);
+        else
+            component.statusChanged.connect(finalizeQmlCreation);
+
+        return childObjet; // Note : this should be binded into property
+    }
+
+    function finalizeQmlCreation(component) {
+        // search
+        var i;
+        var result;
+        var obj;
+        for (i = 0 ; i < qmlObjectList.length ; i++) {
+            if (qmlObjectList[i].component === component)
+                break;
+        }
+
+        if (i >= qmlObjectList.length) {
+            console.warn("[QmlAppComponents][StyleLoader] Component list not matching");
+            return;
+        }
+        obj = qmlObjectList[i];
+
+        if (component.status === Component.Ready) {
+            result = component.createObject(obj.parent);
+            result.width = result.parent.width
+            result.height = result.parent.height
+            obj.obj = result;
+            qmlObjectList.splice(i, 1); // pop created component
+            // Even if we popped, object may already binded into parent's property.
+            // Ex) property Item childObj: qmlObject(...);
+        } else if (component.status === Component.Error) {
+            // Error Handling
+            console.warn("[QmlAppComponents][StyleLoader] Error creating customized qml object", component.errorString(), qmlObjectList[i].parent, qmlObjectList[i].id);
+        }
+    }
+
     function setAppPath(url) {
         var appPath = Qt.resolvedUrl(url);
-        if (appPath[appPath.length - 1] != "/")
+        if (appPath[appPath.length - 1] !== "/")
             appPath += "/";
         console.log("[QmlAppComponents][StyleLoader] App path set to", appPath);
         _appPath = appPath;
     }
 
+    function setResourcePath(url) {
+        var resourcePath = Qt.resolvedUrl(url);
+        if (resourcePath[resourcePath.length - 1] !== "/")
+            resourcePath += "/";
+        console.log("[QmlAppComponents][StyleLoader] Resource path set to", resourcePath);
+        _resourcePath = resourcePath;
+    }
 
     function getQmlRunnerDependentAppPath() {
         if (Qt.application == undefined) {

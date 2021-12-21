@@ -1,0 +1,23 @@
+Step 1
+Copy everything in this dir to target machine home, and run it.
+ex) scp -r ./* root@IPADDR:~/
+ex) eos-benchmark-launcher ~/main.qml
+Expected result: red bg screen with beanbird image with dummy text, and rect on left top, right top with #FF00FF color(like purple)
+                 It can be closed soon. (Not important)
+Note : Testing local customization file override with component/object loader.
+
+Step 2.
+Remove customization dir in TARGET machine, and run it
+ex) ~# rm -rf ./customization
+ex) eos-benchmark-launcher ~/main.qml
+Expected result: blue bg screen with "B" large text image. rectangle on left, right top with green color.
+                 It can be closed soon. (Not important)
+Note : Testing common fallback when only system common style exists.
+
+Step 3.
+Remove every customization file in TARGET machine, and run it
+ex) (IN TARGET MACHINE) ~# rm ./style.json; rm ./*.png; rm ./CustomizedCommonModule.qml;
+ex) eos-benchmark-launcher ~/main.qml
+Expedted result: white bg screen with beanbird image, and a rectangle-shaped line on left-top and right-top.
+                 It can be closed soon.
+Note : Testing no-style fallback
