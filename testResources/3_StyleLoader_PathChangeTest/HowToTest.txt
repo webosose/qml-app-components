@@ -1,0 +1,54 @@
+Step 1
+Copy main.qml to target machine home dir
+Copy style.qml and one png image to target machine home dir and run it.
+
+ex) scp ./main.qml root@IPADDR:~/
+ex) scp ./style.json root@IPADDR:~/
+ex) scp ./default.png root@IPADDR:~/
+ex) (IN TARGET MACHINE) ~# mkdir customization
+ex) scp ./customization/style.json root@IPADDR:~/customization/
+ex) scp ./test.png root@IPADDR:~/
+ex) (IN TARGET MACHINE) ~# rm /var/cache/xdg/qml-runner/qmlcache/*; eos-benchmark-launcher ~/main.qml
+
+Expedted result: red bg screen with beanbird image WITH green dummy text. It can be closed soon.
+Note : Testing basic working
+
+Step 2.
+Rename customization directory name and filenames, and run main.qml
+
+ex) (IN TARGET MACHINE) ~# mv ./customization/style.json ./customization/style_myapp.json
+ex) (IN TARGET MACHINE) ~# mv ./customization ./customization2
+ex) (IN TARGET MACHINE) ~# mkdir global
+ex) (IN TARGET MACHINE) ~# mv ./style.json ./global/style_global.json
+ex) (IN TARGET MACHINE) ~# rm /var/cache/xdg/qml-runner/qmlcache/*; eos-benchmark-launcher ~/main.qml
+
+Expected result: white screen with beanbird image that located in center. It can be closed soon. (Not important)
+Note : Testing default fallback when no style (even global!) exists.
+
+Step 3.
+copy and run main2.qml
+
+ex) scp ./main2.qml root@IPADDR:~/
+ex) (IN TARGET MACHINE) ~# rm /var/cache/xdg/qml-runner/qmlcache/*; eos-benchmark-launcher ~/main2.qml
+
+Expected result: Blue screen and 'B' image in center.
+Note : Testing global path change works.
+
+Step 4.
+copy and run main3.qml
+
+ex) scp ./main3.qml root@IPADDR:~/
+ex) (IN TARGET MACHINE) ~# rm /var/cache/xdg/qml-runner/qmlcache/*; eos-benchmark-launcher ~/main3.qml
+
+Expected result: Red screen and dummy typed beanbird image in center.
+Note : Testing local app path-suffix/name change works.
+
+Step 5.
+copy and run main4.qml. change customization2 to customization3
+
+ex) scp ./main4.qml root@IPADDR:~/
+ex) (IN TARGET MACHINE) ~# mv ./customization2 ./customization3
+ex) (IN TARGET MACHINE) ~# rm /var/cache/xdg/qml-runner/qmlcache/*; eos-benchmark-launcher ~/main4.qml
+
+Expected result: Red screen and dummy typed beanbird image in center.
+Note : Testing local app path/name change works, and it ignores suffix changes.

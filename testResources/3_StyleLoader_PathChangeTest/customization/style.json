@@ -1,0 +1,8 @@
+{
+    "keyColor1": "red",
+    "keyColor2": "#A06060",
+    "keyImage1": "test.png",
+    "commonOnlyValue": 10,
+    "buttonPressColor": "#303030",
+    "buttonReleaseColor": "#404040"
+}
