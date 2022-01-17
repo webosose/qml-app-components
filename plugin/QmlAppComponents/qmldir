@@ -5,7 +5,9 @@ AppMain                 0.1 App/AppMain.qml
 FontStyle               0.1 AppStyle/FontStyle.qml
 ColorThemeStyle         0.1 AppStyle/ColorThemeStyle.qml
 AppStyle                0.1 AppStyle/AppStyle.qml
-singleton StyleLoader   0.1 AppStyle/StyleLoader.qml
+
+singleton StyleLoader   0.1 AppStyle/StyleLoader_0_1.qml
+singleton StyleLoader   0.2 AppStyle/StyleLoader_0_2.qml
 
 Log                     0.1 Developer/Log.qml
 DebugBackground         0.1 Developer/DebugBackground.qml
